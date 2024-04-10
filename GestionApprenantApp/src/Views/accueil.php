@@ -1,5 +1,6 @@
-<?php include_once __DIR__ . '/includes/header.php';
+<?php include_once __DIR__ . '/includes/header.php'; ?>
+<main class="p-4">
+    <?php include_once __DIR__ . '/includes/connexion.php'; ?>
+</main>
 
-include_once __DIR__ . '/includes/connexion.php';
-
-include_once __DIR__ . '/includes/footer.php';
+<?php include_once __DIR__ . '/includes/footer.php'; ?>

@@ -14,6 +14,7 @@ class HomeController
             $erreur = '';
         }
         include __DIR__ . "/../Views/accueil.php";
+       
     }
 
     public function quit()
@@ -23,6 +24,6 @@ class HomeController
 
     public function page404(): void
     {
-        include __DIR__ . "/../Views/accueil.php";
+        header("HTTP/1.1 404 Not Found");
     }
 }

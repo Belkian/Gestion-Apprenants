@@ -25,7 +25,6 @@ class UserRepository
         $sql = "INSERT INTO " . PREFIXE . "user (lastName, firstName, password, address, telephone, User_Role, mail) VALUES (:lastName, :firstName, :password, :address, :telephone, :User_Role, :mail)";
 
         $statement = $this->DB->prepare($sql);
-
         $statement->execute([]);
         return $statement;
     }

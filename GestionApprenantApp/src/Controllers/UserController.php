@@ -16,38 +16,32 @@ class UserController
         $this->UserRepo = new UserRepository();
     }
 
-    public function index()
+    public function index($user)
     {
-        include_once __DIR__ . '/../Views/dashboard.php';
+        $user = json_decode($user);
+        $this->render('dashboard', ['user' => $user]);
     }
 
     public function registerUser($data)
     {
-        foreach ($data as $key => $value) {
-            if (!is_array($value)) {
-                $data[$key] = htmlspecialchars($value);
-            }
-        }
-        $data['nom'] = htmlspecialchars(trim(strip_tags($data['nom'])));
-        $data['prenom'] = htmlspecialchars(trim(strip_tags($data['prenom'])));
-        $data['password'] = htmlspecialchars(trim(strip_tags($data['password'])));
-        $data['passwordBis'] = htmlspecialchars(trim(strip_tags($data['passwordBis'])));
-        $data['adressePostale'] = htmlspecialchars(trim(strip_tags($data['adressePostale'])));
-        $data['telephone'] = htmlspecialchars(trim(strip_tags($data['telephone'])));
-        $data['email'] = htmlspecialchars(trim(strip_tags($data['email'])));
+        $data = file_get_contents('php://input');
+        $array = json_decode($data, true);
 
-        if ($data['password'] === $data['passwordBis'] && strlen($data['password']) >= 8) {
-            $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
-            $data = [
-                'LastName' => $data['nom'],
-                'FirstName' => $data['prenom'],
-                'Password' => $data['password'],
-                'Address' => $data['adressePostale'],
-                'Telephone' => $data['telephone'],
-                'UserRole' => 0,
-                'Mail' => $data['email']
+        $array['NomApprenant'] = htmlspecialchars(trim(strip_tags($array['NomApprenant'])));
+        $array['PrenomApprenant'] = htmlspecialchars(trim(strip_tags($array['PrenomApprenant'])));
+        $array['PasswordApprenant'] = htmlspecialchars(trim(strip_tags($array['PasswordApprenant'])));
+        $array['EmailApprenant'] = htmlspecialchars(trim(strip_tags($array['EmailApprenant'])));
+
+        if (strlen($array['password']) >= 8) {
+            $array['password'] = password_hash($array['password'], PASSWORD_DEFAULT);
+            $array = [
+                'Nom' => $array['NomApprenant'],
+                'Prenom' => $array['PrenomApprenant'],
+                'Password' => $array['PasswordApprenant'],
+                'Email' => $array['EmailApprenant'],
+                'IdRole' => 3,
             ];
-            $user = new User($data);
+            $user = new User($array);
             if (isset($user) && !empty($user)) {
                 $this->UserRepo->saveUser($user);
             }
@@ -64,7 +58,7 @@ class UserController
                 if (password_verify($array['Password'], $User->getPassword())) {
                     $_SESSION['connecté'] = TRUE;
                     $_SESSION['user'] = serialize($User);
-                    $this->render('dashboard');
+                    $this->render('dashboard', ['user' => $_SESSION['user']]);
                 } else {
                 }
             } else {
@@ -72,15 +66,10 @@ class UserController
         }
     }
 
-    public function deleteUser($id)
+
+    public function deleteThisUser($id)
     {
         $User = $this->UserRepo->deleteThisUser($id);
-        header('location: ' . HOME_URL . 'connexion');
-    }
-
-    public function monProfil()
-    {
-        $User = unserialize($_SESSION['user']);
     }
 
     public function updateThisUser($data, $IdUser)
