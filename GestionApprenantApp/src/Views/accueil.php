@@ -1,14 +1,5 @@
-<?php include_once '/includes/header.php' ?>
+<?php include_once __DIR__ . '/includes/header.php';
 
-<?php
-switch ($section) {
-    case 'inscription':
-        break;
+include_once __DIR__ . '/includes/connexion.php';
 
-    default:
-        include_once '/includes/connexion.php';
-        break;
-}
-?>
-
-<?php include_once '/includes/footer.php' ?>
+include_once __DIR__ . '/includes/footer.php';

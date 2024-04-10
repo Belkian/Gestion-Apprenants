@@ -1,3 +1,4 @@
+<?php ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,11 +8,11 @@
     <title>Document</title>
 </head>
 
-<body class="h-screen flex flex-col items-center justify-between ">
+<body class="h-screen flex flex-col items-center">
 
 
     <header class="h-12 flex justify-between bg-gray-100 w-full items-center *:mx-3 *:text-lg">
         <a href="" class="font-semibold">SIMPLON</a>
-        <a href="" class="font-medium">Connexion</a>
-        <!-- <a href="" class="font-medium">Deconnexion</a> -->
+        <button id="btnCo" onclick="Connexion()" class="font-medium">Connexion</button>
+
     </header>

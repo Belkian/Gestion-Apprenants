@@ -3,15 +3,12 @@
 namespace src\Controllers;
 
 use src\Models\User;
-use src\Repositories\ReservationRepository;
 use src\Repositories\UserRepository;
 use src\Services\Reponse;
 
 class UserController
 {
     private $UserRepo;
-    private $ReservationRepo;
-
     use Reponse;
 
     public function __construct()
@@ -19,8 +16,9 @@ class UserController
         $this->UserRepo = new UserRepository();
     }
 
-    public function index($User)
+    public function index()
     {
+        include_once __DIR__ . '/../Views/dashboard.php';
     }
 
     public function registerUser($data)
@@ -52,28 +50,24 @@ class UserController
             $user = new User($data);
             if (isset($user) && !empty($user)) {
                 $this->UserRepo->saveUser($user);
-                $this->render("accueil", ["section" => 'menu', 'action' => 'connexion', "succes" => "L'inscription est un SUCCES !!!!!"]);
             }
         } else {
-            $this->render("accueil", ['section' => 'inscription', "erreur" => 'Les mots de passe ne sont pas identique']);
         }
     }
 
-    public function authentication($email, $password)
+    public function authentication($data)
     {
-        if (isset($email) && isset($password) && !empty($password) && !empty($email)) {
-            if ($User = $this->UserRepo->getThisUser($email, $password)) {
-                if (password_verify($password, $User->getPassword())) {
+        $data = file_get_contents('php://input');
+        $array = json_decode($data, true);
+        if (!empty($array) && isset($array)) {
+            if ($User = $this->UserRepo->getThisUser($array['Email'])) {
+                if (password_verify($array['Password'], $User->getPassword())) {
                     $_SESSION['connecté'] = TRUE;
                     $_SESSION['user'] = serialize($User);
-                    header('location: ' . HOME_URL . 'dashboard');
-                    die();
+                    $this->render('dashboard');
                 } else {
-                    header('location: ' . HOME_URL . '?erreur=connexion');
                 }
-                die;
             } else {
-                header('location: ' . HOME_URL);
             }
         }
     }
@@ -87,7 +81,6 @@ class UserController
     public function monProfil()
     {
         $User = unserialize($_SESSION['user']);
-        $this->render("dashboard", ['section' => 'monprofil', 'action' => 'edit', "User" => $User]);
     }
 
     public function updateThisUser($data, $IdUser)
@@ -122,7 +115,7 @@ class UserController
 
         if (isset($user) && !empty($user)) {
             if ($this->UserRepo->updateThisUser($user)) {
-                $this->authentication($user->getMail(), $Password);
+                // $this->authentication($user->getMail(), $Password);
             }
         } else {
         }

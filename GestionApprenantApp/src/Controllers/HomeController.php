@@ -2,12 +2,9 @@
 
 namespace src\Controllers;
 
-use src\Services\Reponse;
-
 class HomeController
 {
 
-    use Reponse;
 
     public function index(): void
     {
@@ -16,26 +13,16 @@ class HomeController
         } else {
             $erreur = '';
         }
-
-        $this->render("accueil", ["erreur" => $erreur]);
+        include __DIR__ . "/../Views/accueil.php";
     }
-
-    public function connexion()
-    {
-        $this->render("accueil", ["section" => 'menu', 'action' => 'connexion']);
-    }
-
 
     public function quit()
     {
         session_destroy();
-        header('location: ' . HOME_URL);
-        die();
     }
 
     public function page404(): void
     {
-        header("HTTP/1.1 404 Not Found");
-        $this->render('404');
+        include __DIR__ . "/../Views/accueil.php";
     }
 }
