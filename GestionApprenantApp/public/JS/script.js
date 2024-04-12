@@ -33,6 +33,13 @@ function NavOFF() {
 }
 
 
+function AfficheNewPromotion() {
+    let Promotion = document.querySelector('#Include_Promotions').classList;
+    let CreatePromotion = document.querySelector('#Include_newPromotion').classList;
+    Promotion.toggle('hidden');
+    CreatePromotion.toggle('hidden');
+}
+
 function Accueil() {
     const request = new XMLHttpRequest();
     request.open('POST', 'http://gestionapprenant/accueil', true);
@@ -49,17 +56,44 @@ function Accueil() {
     }
 }
 
+
+function PanneauOFF() {
+    let cours = document.querySelector('#Include_Cours').classList;
+    let promotions = document.querySelector('#Include_Promotions').classList;
+    let apprenant = document.querySelector('#Include_Apprenant').classList;
+    cours.add('hidden');
+    promotions.add('hidden');
+    apprenant.add('hidden');
+}
+
+
 function AccueilDashboard() {
+    PanneauOFF();
     NavOFF();
     AccueilON();
+    let cours = document.querySelector('#Include_Cours').classList;
+    cours.toggle('hidden');
     window.history.replaceState(null, document.title, "/dashboard/accueil");
 }
 
 function Promotions() {
+    PanneauOFF();
     NavOFF();
     PromotionsON();
+    let promotions = document.querySelector('#Include_Promotions').classList;
+    promotions.toggle('hidden');
     window.history.replaceState(null, document.title, "/dashboard/promotions");
 }
+
+function Apprenant() {
+    PanneauOFF();
+    NavOFF();
+    ApprenantON();
+    let apprenant = document.querySelector('#Include_Apprenant').classList;
+    apprenant.toggle('hidden');
+    window.history.replaceState(null, document.title, "/dashboard/apprenant");
+}
+
 
 
 
@@ -82,11 +116,13 @@ function Register() {
     request.onreadystatechange = function () {
         if (request.readyState === 4 && request.status === 200) {
             let affiche = document.querySelector('main');
+            let header = document.querySelector('#header');
+            let btnCo = document.querySelector('#btnCo');
+            header.removeChild(btnCo);
+            header.innerHTML += '<button id="btnDeco" onclick="deconnexion()" class="font-medium">Déconnexion</button>';
 
             affiche.innerHTML = '';
             affiche.innerHTML += request.responseText;
-
-            window.history.replaceState(null, document.title, "/dashboard");
             AccueilDashboard();
         }
     }
@@ -95,17 +131,13 @@ function Register() {
 
 
 function RegisterApprenant() {
-    let NomApprenant = document.querySelector('#NomApprenant');
+    let NomApprenant = document.querySelector('#NomApprenant').value;
     let PrenomApprenant = document.querySelector('#PrenomApprenant');
     let EmailApprenant = document.querySelector('#EmailApprenant');
-    let PasswordApprenant = document.querySelector('#PasswordApprenant');
-    let CompteActiver = document.querySelector('#CompteActiver');
     let data = {
         "NomApprenant": NomApprenant,
         "PrenomApprenant": PrenomApprenant,
         "EmailApprenant": EmailApprenant,
-        "PasswordApprenant": PasswordApprenant,
-        "CompteActiver": CompteActiver
     }
     const request = new XMLHttpRequest();
 
@@ -117,43 +149,20 @@ function RegisterApprenant() {
 
     request.onreadystatechange = function () {
         if (request.readyState === 4 && request.status === 200) {
-            let affiche = document.querySelector('main');
-            affiche.innerHTML = '';
             affiche.innerHTML += request.responseText;
-            window.history.replaceState(null, document.title, "/dashboard/apprenant");
-            NavOFF();
-            ApprenantON();
         }
     }
 }
-function Apprenant() {
-    window.history.replaceState(null, document.title, "/dashboard/apprenant");
-    NavOFF();
-    ApprenantON();
-}
 
-
-
-
-
-
-
-
-function Deconnexion() {
-
+function deconnexion() {
     const request = new XMLHttpRequest();
-    request.open('POST', 'http://gestionapprenant/deconnexion', true);
-
+    request.open('GET', 'http://gestionapprenant/dashboard/deconnexion', true);
     request.setRequestHeader('Content-Type', 'application/json');
     request.send();
     request.onreadystatechange = function () {
         if (request.readyState === 4 && request.status === 200) {
-            let affiche = document.querySelector('main');
-            affiche.innerHTML = '';
-            affiche.innerHTML += request.responseText;
             window.history.replaceState(null, document.title, "/");
+            document.body.innerHTML = request.responseText;
         }
     }
-
-
 }

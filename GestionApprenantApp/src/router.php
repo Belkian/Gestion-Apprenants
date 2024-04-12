@@ -12,25 +12,9 @@ $route = $_SERVER['REDIRECT_URL'];
 $methode = $_SERVER['REQUEST_METHOD'];
 $routeComposee = $routeComposee->routeComposee($route);
 
-if (isset($_SESSION['connecté']) !== TRUE) {
-  switch ($route) {
-    case HOME_URL:
-      $HomeController->index();
-      break;
-    case str_contains($routeComposee[0], "connexion"):
-      if ($methode === 'POST') {
-        $UserController->authentication($_POST);
-      }
-      break;
-    default:
 
-      break;
-  }
-}
 
 if (isset($_SESSION['connecté']) == TRUE) {
-  $routeComposee[0] = 'dashboard';
-
   switch ($route) {
     case str_contains($routeComposee[0], "dashboard"):
       switch ($route) {
@@ -47,8 +31,7 @@ if (isset($_SESSION['connecté']) == TRUE) {
         case str_contains($routeComposee[1], "promotions"):
 
           break;
-
-        case str_contains($routeComposee[0], "deconnexion"):
+        case str_contains($routeComposee[1], "deconnexion"):
           $HomeController->quit();
           break;
 
@@ -60,6 +43,20 @@ if (isset($_SESSION['connecté']) == TRUE) {
 
     default:
       $HomeController->page404();
+      break;
+  }
+} else {
+  switch ($route) {
+    case HOME_URL:
+      $HomeController->index();
+      break;
+    case str_contains($routeComposee[0], "connexion"):
+      if ($methode === 'POST') {
+        $UserController->authentication($_POST);
+      }
+      break;
+    default:
+
       break;
   }
 }

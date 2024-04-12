@@ -16,10 +16,10 @@ class UserController
         $this->UserRepo = new UserRepository();
     }
 
-    public function index($user)
+    public function index($data)
     {
-        $user = json_decode($user);
-        $this->render('dashboard', ['user' => $user]);
+        $data = unserialize($data);
+        $this->authentication($data);
     }
 
     public function registerUser($data)
@@ -29,7 +29,6 @@ class UserController
 
         $array['NomApprenant'] = htmlspecialchars(trim(strip_tags($array['NomApprenant'])));
         $array['PrenomApprenant'] = htmlspecialchars(trim(strip_tags($array['PrenomApprenant'])));
-        $array['PasswordApprenant'] = htmlspecialchars(trim(strip_tags($array['PasswordApprenant'])));
         $array['EmailApprenant'] = htmlspecialchars(trim(strip_tags($array['EmailApprenant'])));
 
         if (strlen($array['password']) >= 8) {
@@ -37,7 +36,6 @@ class UserController
             $array = [
                 'Nom' => $array['NomApprenant'],
                 'Prenom' => $array['PrenomApprenant'],
-                'Password' => $array['PasswordApprenant'],
                 'Email' => $array['EmailApprenant'],
                 'IdRole' => 3,
             ];
@@ -60,8 +58,10 @@ class UserController
                     $_SESSION['user'] = serialize($User);
                     $this->render('dashboard', ['user' => $_SESSION['user']]);
                 } else {
+                    var_dump('error3');
                 }
             } else {
+                var_dump('error2');
             }
         }
     }

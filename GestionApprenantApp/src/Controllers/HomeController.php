@@ -14,12 +14,13 @@ class HomeController
             $erreur = '';
         }
         include __DIR__ . "/../Views/accueil.php";
-       
     }
 
     public function quit()
     {
         session_destroy();
+        header('location: http://gestionapprenant/');
+        exit;
     }
 
     public function page404(): void

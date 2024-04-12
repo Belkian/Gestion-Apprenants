@@ -1,6 +1,6 @@
 <div class="hidden" id="Include_Cours">
     <div class="m-auto w-full *:w-full bg-gray-100 p-5">
-        <h2>DWWM3</h2>
+        <h2 class="text-3xl"><?php echo  $user->getNom(); ?></h2>
         <p>nombre de participant</p>
         <p>date</p>
         <label for="code">Code</label>

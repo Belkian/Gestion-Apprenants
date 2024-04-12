@@ -22,7 +22,7 @@ class UserRepository
 
     public function saveUser(User $user)
     {
-        $sql = "INSERT INTO " . PREFIXE . "user (lastName, firstName, password, address, telephone, User_Role, mail) VALUES (:lastName, :firstName, :password, :address, :telephone, :User_Role, :mail)";
+        $sql = "INSERT INTO " . PREFIXE . "user (NOM, PRENOM, password, User_Role, mail) VALUES ()";
 
         $statement = $this->DB->prepare($sql);
         $statement->execute([]);
@@ -73,20 +73,24 @@ class UserRepository
     {
         $sql = "UPDATE " . PREFIXE .
             "user 
-
         SET
-            lastName = :lastName,
-            firstName = :firstName, 
-            password = :password,
-            address = :address,
-            telephone = :telephone, 
-            User_Role = :User_Role,
-            mail = :mail
-            WHERE Id_User = :Id_User;";
+            NOM = :NOM,
+            PRENOM = :PRENOM, 
+            PASSWORD = :PASSWORD,
+            ID_ROLE = :ID_ROLE,
+            EMAIL = :EMAIL
+            WHERE ID_USER = :ID_USER;";
 
         $statement = $this->DB->prepare($sql);
 
-        $retour = $statement->execute([]);
+        $retour = $statement->execute([
+            ':NOM' => $user->getNom(),
+            ':PRENOM' => $user->getPrenom(),
+            ':PASSWORD' => $user->getPassword(),
+            ':ID_ROLE' => $user->getIdRole(),
+            ':EMAIL' => $user->getEmail(),
+            ':ID_USER' => $user->getIdUser()
+        ]);
 
         return $retour;
     }
