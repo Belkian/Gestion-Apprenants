@@ -1,4 +1,4 @@
-<div class="flex justify-between flex-col bg-gray-100 items-center *:mx-3 p-5 m-5 w-1/2 m-auto">
+<div id="connexionPanel" class="flex justify-between flex-col bg-gray-100 items-center *:mx-3 p-5 m-5 w-1/2 m-auto">
     <H1 class="text-3xl font-bold m-2">Bienvenue</H1>
     <div class="flex flex-col w-10/12">
         <label for="Emailconnexion">Email *</label>

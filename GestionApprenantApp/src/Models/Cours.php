@@ -2,6 +2,7 @@
 
 namespace src\Models;
 
+use DateTime;
 use src\Services\Hydratation;
 
 class Cours

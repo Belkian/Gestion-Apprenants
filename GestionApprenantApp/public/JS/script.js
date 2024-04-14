@@ -33,12 +33,31 @@ function NavOFF() {
 }
 
 
+
+
+
+
+
+
+
 function AfficheNewPromotion() {
     let Promotion = document.querySelector('#Include_Promotions').classList;
     let CreatePromotion = document.querySelector('#Include_newPromotion').classList;
     Promotion.toggle('hidden');
     CreatePromotion.toggle('hidden');
 }
+
+function AfficheNewApprenant() {
+    let apprenant = document.querySelector('#Include_Apprenants').classList;
+    let newApprenant = document.querySelector('#Include_newApprenant').classList;
+    apprenant.toggle('hidden');
+    newApprenant.toggle('hidden');
+}
+
+
+
+
+
 
 function Accueil() {
     const request = new XMLHttpRequest();
@@ -60,7 +79,7 @@ function Accueil() {
 function PanneauOFF() {
     let cours = document.querySelector('#Include_Cours').classList;
     let promotions = document.querySelector('#Include_Promotions').classList;
-    let apprenant = document.querySelector('#Include_Apprenant').classList;
+    let apprenant = document.querySelector('#Include_Apprenants').classList;
     cours.add('hidden');
     promotions.add('hidden');
     apprenant.add('hidden');
@@ -89,7 +108,7 @@ function Apprenant() {
     PanneauOFF();
     NavOFF();
     ApprenantON();
-    let apprenant = document.querySelector('#Include_Apprenant').classList;
+    let apprenant = document.querySelector('#Include_Apprenants').classList;
     apprenant.toggle('hidden');
     window.history.replaceState(null, document.title, "/dashboard/apprenant");
 }
@@ -132,12 +151,12 @@ function Register() {
 
 function RegisterApprenant() {
     let NomApprenant = document.querySelector('#NomApprenant').value;
-    let PrenomApprenant = document.querySelector('#PrenomApprenant');
-    let EmailApprenant = document.querySelector('#EmailApprenant');
+    let PrenomApprenant = document.querySelector('#PrenomApprenant').value;
+    let EmailApprenant = document.querySelector('#EmailApprenant').value;
     let data = {
         "NomApprenant": NomApprenant,
         "PrenomApprenant": PrenomApprenant,
-        "EmailApprenant": EmailApprenant,
+        "EmailApprenant": EmailApprenant
     }
     const request = new XMLHttpRequest();
 
@@ -145,11 +164,16 @@ function RegisterApprenant() {
 
     request.setRequestHeader('Content-Type', 'application/json');
 
+    data = JSON.stringify(data);
+
     request.send(data);
 
     request.onreadystatechange = function () {
         if (request.readyState === 4 && request.status === 200) {
-            affiche.innerHTML += request.responseText;
+            NomApprenant = "";
+            PrenomApprenant = "";
+            EmailApprenant = "";
+            document.querySelector('#Include_NewApprenant').innerHTML += request.responseText;
         }
     }
 }
@@ -163,6 +187,40 @@ function deconnexion() {
         if (request.readyState === 4 && request.status === 200) {
             window.history.replaceState(null, document.title, "/");
             document.body.innerHTML = request.responseText;
+        }
+    }
+}
+function connexionPanel() {
+
+}
+
+function firstConnexion() {
+
+}
+
+function newPromotion() {
+    let NomDeLaPromo = document.querySelector('#NomDeLaPromo').value;
+    let DateDebut = document.querySelector('#DateDebut').value;
+    let DateFin = document.querySelector('#DateFin').value;
+    let PlacesDispo = document.querySelector('#PlacesDispo').value;
+    let data = {
+        "NomDeLaPromo": NomDeLaPromo,
+        "DateDebut": DateDebut,
+        "DateFin": DateFin,
+        "PlacesDispo": PlacesDispo
+    }
+    const request = new XMLHttpRequest();
+
+    request.open('POST', 'http://gestionapprenant/dashboard/newpromotion', true);
+
+    request.setRequestHeader('Content-Type', 'application/json');
+
+    data = JSON.stringify(data);
+
+    request.send(data);
+
+    request.onreadystatechange = function () {
+        if (request.readyState === 4 && request.status === 200) {
         }
     }
 }

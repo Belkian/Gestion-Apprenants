@@ -22,7 +22,7 @@ class UserController
         $this->authentication($data);
     }
 
-    public function registerUser($data)
+    public function registerApprenant($data)
     {
         $data = file_get_contents('php://input');
         $array = json_decode($data, true);
@@ -31,19 +31,26 @@ class UserController
         $array['PrenomApprenant'] = htmlspecialchars(trim(strip_tags($array['PrenomApprenant'])));
         $array['EmailApprenant'] = htmlspecialchars(trim(strip_tags($array['EmailApprenant'])));
 
-        if (strlen($array['password']) >= 8) {
-            $array['password'] = password_hash($array['password'], PASSWORD_DEFAULT);
-            $array = [
+        if (isset($array['EmailApprenant']) && !empty($array['EmailApprenant']) && isset($array['PrenomApprenant']) && !empty($array['PrenomApprenant']) && isset($array['NomApprenant']) && !empty($array['NomApprenant'])) {
+            $newApprenant = [
                 'Nom' => $array['NomApprenant'],
                 'Prenom' => $array['PrenomApprenant'],
                 'Email' => $array['EmailApprenant'],
                 'IdRole' => 3,
+                'Password' => 'password'
             ];
-            $user = new User($array);
+            $user = new User($newApprenant);
             if (isset($user) && !empty($user)) {
-                $this->UserRepo->saveUser($user);
+                $this->UserRepo->saveApprenant($user);
+                $message = ['message' => "L'utilisateur a bien été enregistré"];
+                return json_encode($message);
+            } else {
+                $message = ['message' => "Problème lors de l'enregistrement"];
+                return json_encode($message);
             }
         } else {
+            $message = ['message' => "Problème lors de l'enregistrement"];
+            return json_encode($message);
         }
     }
 

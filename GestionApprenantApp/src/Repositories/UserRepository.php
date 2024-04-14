@@ -20,12 +20,35 @@ class UserRepository
     }
 
 
-    public function saveUser(User $user)
+    public function saveApprenant(User $user)
     {
-        $sql = "INSERT INTO " . PREFIXE . "user (NOM, PRENOM, password, User_Role, mail) VALUES ()";
+        $sql = "INSERT INTO " . PREFIXE . "user (NOM, PRENOM, PASSWORD, ID_ROLE, EMAIL) VALUES (:NOM, :PRENOM, :PASSWORD, :ID_ROLE, :EMAIL)";
 
         $statement = $this->DB->prepare($sql);
-        $statement->execute([]);
+        $statement->execute([
+            ':NOM' => $user->getNom(),
+            ':PRENOM' => $user->getPrenom(),
+            ':PASSWORD' => $user->getPassword(),
+            ':ID_ROLE' => $user->getIdRole(),
+            ':EMAIL' => $user->getEmail()
+        ]);
+
+        // $to      = $user->getEmail();
+        // $subject = 'Inscription au site SimplonSuivis';
+        // $message = 'Bonjour ' . $user->getPrenom() . ' ! Veuillez cliquer sur le lien ci-dessous 
+        // le LIEN !!!';
+        // $headers = 'From: email@envoi.fr' . "\r\n" .
+        //     'Reply-To: email@envoi.fr' . "\r\n" .
+        //     'X-Mailer: PHP/' . phpversion();
+
+        // mail($to, $subject, $message, $headers);
+
+        // if ($test) {
+        //     echo "le mail a bien été envoyé.";
+        // } else {
+        //     var_dump($test); // reverra la valeur de la fonction mail, probablement false. Aller voir dans ce cas le fichier error.log dans C://wamp/sendmail/
+        // }
+
         return $statement;
     }
 
@@ -45,7 +68,7 @@ class UserRepository
 
     public function getThisUser($email): User|bool
     {
-        $sql = "SELECT * FROM " . PREFIXE . "user WHERE EMAIL = :EMAIL";
+        $sql = "SELECT * FROM " . PREFIXE . "user WHERE EMAIL = :EMAIL ";
 
         $statement = $this->DB->prepare($sql);
         $statement->bindParam(':EMAIL', $email);
@@ -56,6 +79,24 @@ class UserRepository
         return $retour;
     }
 
+    // public function getThisUser($email): User|bool
+    // {
+    //     $sql = "SELECT * FROM " . PREFIXE . "user, 
+    //     " . PREFIXE . "role, 
+    //     " . PREFIXE . "classe , 
+    //     " . PREFIXE . "userhasclasse,
+    //     " . PREFIXE . "userhascours  
+    //     WHERE " . PREFIXE . "user.EMAIL = :EMAIL 
+    //     AND gestionapp_user.";
+
+    //     $statement = $this->DB->prepare($sql);
+    //     $statement->bindParam(':EMAIL', $email);
+    //     $statement->execute();
+    //     $statement->setFetchMode(PDO::FETCH_CLASS, AllInformationUser::class);
+    //     $retour = $statement->fetch();
+
+    //     return $retour;
+    //}
     public function getThisUserById($id): User|bool
     {
         $sql = "SELECT * FROM " . PREFIXE . "user WHERE Id = :Id";

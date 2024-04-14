@@ -2,11 +2,13 @@
 
 use src\Controllers\HomeController;
 use src\Controllers\UserController;
+use src\Controllers\ClasseController;
 use src\Services\Routing;
 
 $UserController = new UserController;
 $HomeController = new HomeController;
 $routeComposee = new Routing;
+$ClasseController = new ClasseController;
 
 $route = $_SERVER['REDIRECT_URL'];
 $methode = $_SERVER['REQUEST_METHOD'];
@@ -24,12 +26,14 @@ if (isset($_SESSION['connecté']) == TRUE) {
 
         case str_contains($routeComposee[1], "apprenant"):
           if ($methode == 'POST') {
-            $UserController->registerUser($_POST);
+            $UserController->registerApprenant($_POST);
           }
           break;
 
-        case str_contains($routeComposee[1], "promotions"):
-
+        case str_contains($routeComposee[1], "newpromotion"):
+          if ($methode == 'POST') {
+            $ClasseController->NewPromotion($_POST);
+          }
           break;
         case str_contains($routeComposee[1], "deconnexion"):
           $HomeController->quit();

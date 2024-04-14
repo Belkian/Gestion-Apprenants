@@ -12,6 +12,6 @@
     </div>
     <div class="flex justify-between">
         <button class="font-medium bg-sky-500 text-white p-1 rounded m-2" onclick="AfficheNewPromotion()">retour</button>
-        <button class="font-medium bg-sky-500 text-white p-1 rounded m-2" onclick="CreatePromotion()">Valider</button>
+        <button class="font-medium bg-sky-500 text-white p-1 rounded m-2" onclick="newPromotion()">Valider</button>
     </div>
 </div>

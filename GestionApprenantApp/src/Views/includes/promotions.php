@@ -7,18 +7,21 @@
         <p>Tableau des promotions de Simplon</p>
 
     </div>
-    <div class="m-auto w-full *:w-full  m-2 border-b-black border-solid flex align-center justify-start">
-        <input type="checkbox" class="size-4" name="checkall" id="checkall">
-        <p>Promotion</p>
-        <p>Début</p>
-        <p>Fin</p>
-        <p>Places</p>
+    <div class="m-auto w-full m-2 mb-3 border-b-black border-solid flex items-center justify-start border-b-2 border-b-neutral-300">
+        <input type="checkbox" class="size-4 mr-1" name="checkall" id="checkall">
+        <p class="w-2/12">Promotion</p>
+        <p class="w-2/12">Début</p>
+        <p class="w-2/12">Fin</p>
+        <p class="w-2/12">Places</p>
     </div>
-    <div class="m-auto w-full *:w-full m-1 border-b-gray-200 border-solid flex align-center">
-        <p>DWW3</p>
-        <p>DEBUT</p>
-        <p>date</p>
-        <div class="*:m-1">
+    
+    <div class="m-auto w-full m-2  mb-2 border-b-gray-200 border-solid flex items-center justify-start border-b-2 border-b-neutral-100">
+        <input type="checkbox" class="size-4 mr-1">
+        <p class="w-2/12">DWW3</p>
+        <p class="w-2/12">DEBUT</p>
+        <p class="w-2/12">fin</p>
+        <p class="w-2/12">nbrs places</p>
+        <div class="*:m-1 w-2/12 w-max">
             <button class="text-blue-500">Voir</button>
             <button class="text-blue-500">Editer</button>
             <button class="text-blue-500">Supprimer</button>

@@ -7,4 +7,5 @@
         <input type="number" name="code" id="code" value="" class="mb-3">
         <button class="font-medium bg-sky-500 text-white p-3 rounded ">Valider présence</button>
     </div>
+    <?php var_dump($user) ?>
 </div>
