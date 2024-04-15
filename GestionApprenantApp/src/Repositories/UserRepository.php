@@ -66,37 +66,46 @@ class UserRepository
         }
     }
 
-    public function getThisUser($email): User|bool
-    {
-        $sql = "SELECT * FROM " . PREFIXE . "user WHERE EMAIL = :EMAIL ";
-
-        $statement = $this->DB->prepare($sql);
-        $statement->bindParam(':EMAIL', $email);
-        $statement->execute();
-        $statement->setFetchMode(PDO::FETCH_CLASS, User::class);
-        $retour = $statement->fetch();
-
-        return $retour;
-    }
-
     // public function getThisUser($email): User|bool
     // {
-    //     $sql = "SELECT * FROM " . PREFIXE . "user, 
-    //     " . PREFIXE . "role, 
-    //     " . PREFIXE . "classe , 
-    //     " . PREFIXE . "userhasclasse,
-    //     " . PREFIXE . "userhascours  
-    //     WHERE " . PREFIXE . "user.EMAIL = :EMAIL 
-    //     AND gestionapp_user.";
+    //     $sql = "SELECT * FROM " . PREFIXE . "user WHERE EMAIL = :EMAIL ";
 
     //     $statement = $this->DB->prepare($sql);
     //     $statement->bindParam(':EMAIL', $email);
     //     $statement->execute();
-    //     $statement->setFetchMode(PDO::FETCH_CLASS, AllInformationUser::class);
+    //     $statement->setFetchMode(PDO::FETCH_CLASS, User::class);
     //     $retour = $statement->fetch();
 
     //     return $retour;
-    //}
+    // }
+
+    public function getThisUser($email)
+    {
+        $sql = "SELECT " . PREFIXE . "user.ID_USER, 
+		" . PREFIXE . "user.ID_ROLE,
+        " . PREFIXE . "user.NOM,
+        " . PREFIXE . "user.PRENOM,
+        " . PREFIXE . "user.PASSWORD,
+        " . PREFIXE . "user.EMAIL,
+        " . PREFIXE . "role.NAME as ROLE_NAME,
+        " . PREFIXE . "classe.ID_CLASS as ID_CLASSE, 
+        " . PREFIXE . "classe.NOM as NOM_CLASSE,
+        " . PREFIXE . "classe.NOMBRE_APPRENANT,
+        " . PREFIXE . "classe.DATE_DEBUT,
+        " . PREFIXE . "classe.DATE_FIN
+       FROM " . PREFIXE . "user,
+       " . PREFIXE . "role ,
+       " . PREFIXE . "classe
+        WHERE " . PREFIXE . "user.EMAIL = :EMAIL 
+        AND " . PREFIXE . "user.ID_USER = " . PREFIXE . "role.ID_ROLE;";
+
+        $statement = $this->DB->prepare($sql);
+        $statement->execute([':EMAIL' => $email]);
+
+        return $statement->fetchAll(PDO::FETCH_CLASS, User::class);
+    }
+
+
     public function getThisUserById($id): User|bool
     {
         $sql = "SELECT * FROM " . PREFIXE . "user WHERE Id = :Id";

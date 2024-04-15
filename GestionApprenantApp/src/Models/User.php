@@ -13,12 +13,18 @@ class User
     private $Email;
     private $IdRole;
 
+    private $IdClasse;
+    private $NomClasse;
+    private $DateDebut;
+    private $DateFin;
+    private $RoleName;
+    private $NombreApprenant;
+
     use Hydratation;
 
 
-
     /**
-     * Get the value of Id
+     * Get the value of IdUser
      */
     public function getIdUser()
     {
@@ -26,7 +32,7 @@ class User
     }
 
     /**
-     * Set the value of Id
+     * Set the value of IdUser
      */
     public function setIdUser($IdUser): self
     {
@@ -121,6 +127,114 @@ class User
     public function setIdRole($IdRole): self
     {
         $this->IdRole = $IdRole;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of IdClasse
+     */
+    public function getIdClasse()
+    {
+        return $this->IdClasse;
+    }
+
+    /**
+     * Set the value of IdClasse
+     */
+    public function setIdClasse($IdClasse): self
+    {
+        $this->IdClasse = $IdClasse;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of NomClasse
+     */
+    public function getNomClasse()
+    {
+        return $this->NomClasse;
+    }
+
+    /**
+     * Set the value of NomClasse
+     */
+    public function setNomClasse($NomClasse): self
+    {
+        $this->NomClasse = $NomClasse;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of DateDebut
+     */
+    public function getDateDebut()
+    {
+        return $this->DateDebut;
+    }
+
+    /**
+     * Set the value of DateDebut
+     */
+    public function setDateDebut($DateDebut): self
+    {
+        $this->DateDebut = $DateDebut;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of DateFin
+     */
+    public function getDateFin()
+    {
+        return $this->DateFin;
+    }
+
+    /**
+     * Set the value of DateFin
+     */
+    public function setDateFin($DateFin): self
+    {
+        $this->DateFin = $DateFin;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of RoleName
+     */
+    public function getRoleName()
+    {
+        return $this->RoleName;
+    }
+
+    /**
+     * Set the value of RoleName
+     */
+    public function setRoleName($RoleName): self
+    {
+        $this->RoleName = $RoleName;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of NombreApprenant
+     */
+    public function getNombreApprenant()
+    {
+        return $this->NombreApprenant;
+    }
+
+    /**
+     * Set the value of NombreApprenant
+     */
+    public function setNombreApprenant($NombreApprenant): self
+    {
+        $this->NombreApprenant = $NombreApprenant;
 
         return $this;
     }

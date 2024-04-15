@@ -18,7 +18,7 @@
 
     <?php
     if (isset($apprenant) && !empty($apprenant)) {
-        foreach ($apprenant as $key => $value) {
+        foreach ($apprenant as $key) {
             echo  '<div class="m-auto w-full m-2  mb-2 border-b-gray-200 border-solid flex items-center justify-start border-b-2 border-b-neutral-100">
                 <input type="checkbox" class="size-4 mr-1">
                 <p class="w-2/12">' . $key->getNom() . '</p>

@@ -17,11 +17,13 @@ $routeComposee = $routeComposee->routeComposee($route);
 
 
 if (isset($_SESSION['connecté']) == TRUE) {
+  $user = unserialize($_SESSION['user']);
   switch ($route) {
+
     case str_contains($routeComposee[0], "dashboard"):
       switch ($route) {
         case str_contains($routeComposee[1], "accueil"):
-          $UserController->index($_SESSION['user']);
+          $UserController->index($user);
           break;
 
         case str_contains($routeComposee[1], "apprenant"):
@@ -32,7 +34,7 @@ if (isset($_SESSION['connecté']) == TRUE) {
 
         case str_contains($routeComposee[1], "newpromotion"):
           if ($methode == 'POST') {
-            $ClasseController->NewPromotion($_POST);
+            $ClasseController->NewPromotion($_POST, $user);
           }
           break;
         case str_contains($routeComposee[1], "deconnexion"):

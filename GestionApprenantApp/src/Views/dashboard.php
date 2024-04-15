@@ -1,7 +1,8 @@
 <?php
 $user = unserialize($user);
-include_once __DIR__ . '/includes/nav.php';
+$classe = unserialize($classe);
 
+include_once __DIR__ . '/includes/nav.php';
 include_once __DIR__ . '/includes/cours.php';
 
 include_once __DIR__ . '/includes/apprenants.php';

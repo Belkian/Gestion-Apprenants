@@ -58,12 +58,20 @@ class UserController
     {
         $data = file_get_contents('php://input');
         $array = json_decode($data, true);
+
         if (!empty($array) && isset($array)) {
             if ($User = $this->UserRepo->getThisUser($array['Email'])) {
-                if (password_verify($array['Password'], $User->getPassword())) {
+                if (password_verify($array['Password'], $User[0]->getPassword())) {
                     $_SESSION['connecté'] = TRUE;
-                    $_SESSION['user'] = serialize($User);
-                    $this->render('dashboard', ['user' => $_SESSION['user']]);
+                    if ($User[0]->getRoleName() == 'Admin') {
+                        $_SESSION['user'] = serialize($User[0]->getIdUser());
+                        $_SESSION['classe'] = serialize($User);
+                        $this->render('dashboard', ['user' => $_SESSION['user'], 'classe' => $_SESSION['classe']]);
+                    }
+                    if ($User[0]->getRoleName() == 'Apprenant') {
+                        $_SESSION['user'] = serialize($User);
+                        $this->render('dashboard', ['user' => $_SESSION['user']]);
+                    }
                 } else {
                     var_dump('error3');
                 }

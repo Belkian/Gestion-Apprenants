@@ -18,17 +18,18 @@ class ClasseRepository
         require_once __DIR__ . '/../../config.php';
     }
 
-    public function newClasse(Classe $classe)
+    public function newClasse(Classe $classe, $IdUser)
     {
-        $sql = "INSERT INTO " . PREFIXE . "classe ( `NOM`, `NOMBRE_APPRENANT`, `DATE_DEBUT`, `DATE_FIN`) VALUES (:NOM, :NOMBRE_APPRENANT, :DATE_DEBUT, :DATE_FIN);
-        SELECT LAST_INSERT_ID();";
+        $sql = "INSERT INTO " . PREFIXE . "classe (`NOM`, `NOMBRE_APPRENANT`, `DATE_DEBUT`, `DATE_FIN`) VALUES (:NOM, :NOMBRE_APPRENANT, :DATE_DEBUT, :DATE_FIN);
+        INSERT INTO " . PREFIXE . "userhasclasse (ID_CLASS , ID_USER) VALUE (LAST_INSERT_ID(), :ID_USER);";
 
         $statement = $this->DB->prepare($sql);
         $statement->execute([
-            ":NOM" => $classe->getNom(),
+            ":NOM"              => $classe->getNom(),
             ":NOMBRE_APPRENANT" => $classe->getNombreApprenant(),
-            ":DATE_DEBUT" => $classe->getDateDebut(),
-            ":DATE_FIN" => $classe->getDateFin()
+            ":DATE_DEBUT"       => $classe->getDateDebut(),
+            ":DATE_FIN"         => $classe->getDateFin(),
+            ":ID_USER"          => $IdUser
         ]);
 
         return $statement;

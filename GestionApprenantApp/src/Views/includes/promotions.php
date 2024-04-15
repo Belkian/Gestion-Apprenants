@@ -14,18 +14,26 @@
         <p class="w-2/12">Fin</p>
         <p class="w-2/12">Places</p>
     </div>
-    
-    <div class="m-auto w-full m-2  mb-2 border-b-gray-200 border-solid flex items-center justify-start border-b-2 border-b-neutral-100">
-        <input type="checkbox" class="size-4 mr-1">
-        <p class="w-2/12">DWW3</p>
-        <p class="w-2/12">DEBUT</p>
-        <p class="w-2/12">fin</p>
-        <p class="w-2/12">nbrs places</p>
-        <div class="*:m-1 w-2/12 w-max">
-            <button class="text-blue-500">Voir</button>
+
+    <?php
+    if (isset($classe) && !empty($classe)) {
+        foreach ($classe as $key) {
+            echo  '<div class="m-auto w-full m-2  mb-2 border-b-gray-200 border-solid flex items-center justify-start border-b-2 border-b-neutral-100">
+            <input type="checkbox" class="size-4 mr-1">
+            <p class="w-2/12"> ' . $key->getNomClasse() . ' </p>
+            <p class="w-2/12">' . $key->getDateDebut() . '</p>
+            <p class="w-2/12">' . $key->getDateFin() . '</p>
+            <p class="w-2/12">nbrs places ' . $key->getNombreApprenant() . '</p>
+            <div class="*:m-1 w-2/12 w-max">
+            <button class="text-blue-500" onclick="' . $key->getIdClasse() . '">Voir</button>
             <button class="text-blue-500">Editer</button>
             <button class="text-blue-500">Supprimer</button>
-        </div>
-    </div>
+            </div>
+            </div>
+            ';
+        }
+    }
+    ?>
+
 
 </div>

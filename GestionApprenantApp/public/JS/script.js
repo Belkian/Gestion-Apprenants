@@ -139,7 +139,6 @@ function Register() {
             let btnCo = document.querySelector('#btnCo');
             header.removeChild(btnCo);
             header.innerHTML += '<button id="btnDeco" onclick="deconnexion()" class="font-medium">Déconnexion</button>';
-
             affiche.innerHTML = '';
             affiche.innerHTML += request.responseText;
             AccueilDashboard();
@@ -173,7 +172,7 @@ function RegisterApprenant() {
             NomApprenant = "";
             PrenomApprenant = "";
             EmailApprenant = "";
-            document.querySelector('#Include_NewApprenant').innerHTML += request.responseText;
+            // document.querySelector('#Include_NewApprenant').innerHTML += request.responseText;
         }
     }
 }
@@ -204,10 +203,10 @@ function newPromotion() {
     let DateFin = document.querySelector('#DateFin').value;
     let PlacesDispo = document.querySelector('#PlacesDispo').value;
     let data = {
-        "NomDeLaPromo": NomDeLaPromo,
+        "Nom": NomDeLaPromo,
         "DateDebut": DateDebut,
         "DateFin": DateFin,
-        "PlacesDispo": PlacesDispo
+        "NombreApprenant": PlacesDispo
     }
     const request = new XMLHttpRequest();
 
@@ -221,6 +220,10 @@ function newPromotion() {
 
     request.onreadystatechange = function () {
         if (request.readyState === 4 && request.status === 200) {
+            NomDeLaPromo.textContent = "";
+            DateDebut.textContent = "";
+            DateFin.textContent = "";
+            PlacesDispo.textContent = "";
         }
     }
 }
