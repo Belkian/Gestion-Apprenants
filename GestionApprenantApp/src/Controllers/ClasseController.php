@@ -33,18 +33,30 @@ class ClasseController
                 'DateFin' => $array['DateFin'],
                 'NombreApprenant' => $array['NombreApprenant']
             ];
+
             $classe = new Classe($newClasse);
             if (isset($classe) && !empty($classe)) {
-                $_SESSION['classe'] = serialize($this->ClasseRepo->newClasse($classe, $iduser));
-                $message = ['message' => "L'utilisateur a bien été enregistré", 'classe' => $_SESSION['classe']];
-                return json_encode($message);
+                $this->ClasseRepo->newClasse($classe, $iduser);
+                $message = ['message' => "La promotion à bien été enregistré", 'classe' => $newClasse];
+                echo json_encode($message);
             } else {
                 $message = ['message' => "Problème lors de l'enregistrement"];
-                return json_encode($message);
+                echo json_encode($message);
             }
         } else {
             $message = ['message' => "Problème lors de l'enregistrement"];
-            return json_encode($message);
+            echo json_encode($message);
+        }
+    }
+    public function deleteThisClasse($data, $iduser)
+    {
+        $data = file_get_contents('php://input');
+        if ($this->ClasseRepo->deleteThisClasse($data, $iduser)) {
+            $message = ['message' => "La promotion à bien été supprimer"];
+            echo json_encode($message);
+        } else {
+            $message = ['message' => "Problème lors de la suppression de la classe"];
+            echo json_encode($message);
         }
     }
 }

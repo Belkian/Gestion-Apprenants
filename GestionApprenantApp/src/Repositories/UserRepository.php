@@ -88,15 +88,15 @@ class UserRepository
         " . PREFIXE . "user.PASSWORD,
         " . PREFIXE . "user.EMAIL,
         " . PREFIXE . "role.NAME as ROLE_NAME,
-        " . PREFIXE . "classe.ID_CLASS as ID_CLASSE, 
+        " . PREFIXE . "classe.ID_CLASSE, 
         " . PREFIXE . "classe.NOM as NOM_CLASSE,
         " . PREFIXE . "classe.NOMBRE_APPRENANT,
         " . PREFIXE . "classe.DATE_DEBUT,
         " . PREFIXE . "classe.DATE_FIN
        FROM " . PREFIXE . "user,
        " . PREFIXE . "role ,
-       " . PREFIXE . "classe
-        WHERE " . PREFIXE . "user.EMAIL = :EMAIL 
+       " . PREFIXE . "classe 
+       WHERE " . PREFIXE . "user.EMAIL = :EMAIL 
         AND " . PREFIXE . "user.ID_USER = " . PREFIXE . "role.ID_ROLE;";
 
         $statement = $this->DB->prepare($sql);
@@ -105,6 +105,23 @@ class UserRepository
         return $statement->fetchAll(PDO::FETCH_CLASS, User::class);
     }
 
+    public function getAllApprenant($role)
+    {
+        if ($role == 4 | $role == 'Admin' | $role == 3) {
+            $sql = "SELECT " . PREFIXE . "user.ID_USER, 
+		" . PREFIXE . "user.ID_ROLE,
+        " . PREFIXE . "user.NOM,
+        " . PREFIXE . "user.PRENOM,
+        " . PREFIXE . "user.EMAIL
+       FROM " . PREFIXE . "user,
+       " . PREFIXE . "role
+       WHERE " . PREFIXE . "user.ID_ROLE = '3';";
+
+            $statement = $this->DB->prepare($sql);
+            $statement->execute();
+            return $statement->fetchAll(PDO::FETCH_CLASS, User::class);
+        }
+    }
 
     public function getThisUserById($id): User|bool
     {

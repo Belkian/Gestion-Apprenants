@@ -21,7 +21,6 @@ class CoursRepository
     public function saveCours(Cours $Cours)
     {
         $sql = "INSERT INTO " . PREFIXE . "cours (DATETIME_DEBUT, DATETIME_FIN, CODE, ID_CLASS) VALUES (:DATETIME_DEBUT, :DATETIME_FIN, :CODE, :ID_CLASS)";
-
         $statement = $this->DB->prepare($sql);
         $statement->execute([
             ':DATETIME_DEBUT' => $Cours->getDatetimeDebut(),

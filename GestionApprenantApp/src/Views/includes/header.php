@@ -16,5 +16,6 @@
 
     <header id="header" class="h-12 flex justify-between bg-gray-100 w-full items-center *:mx-3 *:text-lg">
         <button class="font-semibold" onclick="Accueil()">SIMPLON</button>
+        <p id="notifications"></p>
         <button id="btnCo" onclick="Connexion()" class="font-medium">Connexion</button>
     </header>

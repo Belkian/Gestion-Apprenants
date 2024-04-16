@@ -169,10 +169,8 @@ function RegisterApprenant() {
 
     request.onreadystatechange = function () {
         if (request.readyState === 4 && request.status === 200) {
-            NomApprenant = "";
-            PrenomApprenant = "";
-            EmailApprenant = "";
-            // document.querySelector('#Include_NewApprenant').innerHTML += request.responseText;
+
+            document.querySelector('#Include_NewApprenant').innerHTML = JSON.parse(request.responseText);
         }
     }
 }
@@ -196,7 +194,13 @@ function connexionPanel() {
 function firstConnexion() {
 
 }
-
+function resetNotif(message) {
+    let notifications = document.querySelector('#notifications');
+    notifications.textContent = message;
+    setTimeout(() =>
+        notifications.textContent = ''
+        , 3000);
+}
 function newPromotion() {
     let NomDeLaPromo = document.querySelector('#NomDeLaPromo').value;
     let DateDebut = document.querySelector('#DateDebut').value;
@@ -218,12 +222,41 @@ function newPromotion() {
 
     request.send(data);
 
+
+
     request.onreadystatechange = function () {
         if (request.readyState === 4 && request.status === 200) {
-            NomDeLaPromo.textContent = "";
-            DateDebut.textContent = "";
-            DateFin.textContent = "";
-            PlacesDispo.textContent = "";
+            let reponse = JSON.parse(request.responseText);
+            resetNotif(reponse.message);
+
+            document.querySelector('#TableauPromos').innerHTML += `<div id="classe${reponse.classe.IdClasse}" class="m-auto w-full m-2 mb-2 border-b-gray-200 border-solid flex items-center justify-start border-b-2 border-b-neutral-100">
+                <input type="checkbox" class="size-4 mr-1">
+            <p class="w-2/12">${reponse.classe.Nom}</p>
+            <p class="w-2/12">${reponse.classe.DateDebut}</p>
+            <p class="w-2/12">${reponse.classe.DateFin}</p>
+            <p class="w-2/12">${reponse.classe.NombreApprenant}</p>
+            <div class="*:m-1 w-2/12 w-max">
+            <button class="text-blue-500" onclick="VoirClasse(${reponse.classe.IdClasse} )">Voir</button>
+            <button class="text-blue-500" onclick="EditerClasse(${reponse.classe.IdClasse} )">Editer</button>
+            <button class="text-blue-500" onclick="SupprimerClasse(${reponse.classe.IdClasse} )">Supprimer</button>
+            </div>
+            </div >` ;
+        }
+    }
+}
+
+function SupprimerClasse(IdClasse) {
+    const request = new XMLHttpRequest();
+    request.open('POST', 'http://gestionapprenant/dashboard/supprimerpromotion', true);
+    request.setRequestHeader('Content-Type', 'application/json');
+    data = JSON.stringify(IdClasse);
+    request.send(data);
+    request.onreadystatechange = function () {
+        if (request.readyState === 4 && request.status === 200) {
+            let reponse = JSON.parse(request.responseText);
+            let classe = document.querySelector(`#classe${IdClasse}`);
+            classe.remove();
+            resetNotif(reponse.message);
         }
     }
 }

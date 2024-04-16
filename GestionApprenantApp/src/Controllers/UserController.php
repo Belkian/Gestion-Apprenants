@@ -65,8 +65,9 @@ class UserController
                     $_SESSION['connecté'] = TRUE;
                     if ($User[0]->getRoleName() == 'Admin') {
                         $_SESSION['user'] = serialize($User[0]->getIdUser());
+                        $_SESSION['apprenant'] = serialize($this->UserRepo->getAllApprenant($User[0]->getIdRole()));
                         $_SESSION['classe'] = serialize($User);
-                        $this->render('dashboard', ['user' => $_SESSION['user'], 'classe' => $_SESSION['classe']]);
+                        $this->render('dashboard', ['user' => $_SESSION['user'], 'classe' => $_SESSION['classe'], 'apprenant' => $_SESSION['apprenant']]);
                     }
                     if ($User[0]->getRoleName() == 'Apprenant') {
                         $_SESSION['user'] = serialize($User);

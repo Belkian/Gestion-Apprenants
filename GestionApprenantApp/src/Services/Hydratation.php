@@ -36,7 +36,6 @@ trait Hydratation
     foreach ($class->getMethods(\ReflectionMethod::IS_PUBLIC) as $methode) {
       $nomMethode = $methode->getName();
       if (strpos($nomMethode, 'get') === 0) {
-        // Vérifie si le nom de la méthode commence par 'get'
         $ObjToArray[ltrim($nomMethode, 'get')] = $this->$nomMethode();
       }
     }

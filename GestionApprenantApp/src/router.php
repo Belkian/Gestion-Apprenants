@@ -40,7 +40,11 @@ if (isset($_SESSION['connecté']) == TRUE) {
         case str_contains($routeComposee[1], "deconnexion"):
           $HomeController->quit();
           break;
-
+        case str_contains($routeComposee[1], "supprimerpromotion"):
+          if ($methode == 'POST') {
+            $ClasseController->deleteThisClasse($_POST, $user);
+          }
+          break;
         default:
           $UserController->index($_SESSION['user']);
           break;

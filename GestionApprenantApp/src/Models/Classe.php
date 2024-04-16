@@ -3,6 +3,7 @@
 namespace src\Models;
 
 use src\Services\Hydratation;
+use DateTime;
 
 class Classe
 {
@@ -73,7 +74,7 @@ class Classe
      */
     public function getDateFin()
     {
-        return $this->DateFin;
+        return $this->DateFin->format('Y-m-d');
     }
 
     /**
@@ -81,8 +82,7 @@ class Classe
      */
     public function setDateFin($DateFin): self
     {
-        $this->DateFin = $DateFin;
-
+        $this->DateFin = new DateTime($DateFin);
         return $this;
     }
 
@@ -91,7 +91,7 @@ class Classe
      */
     public function getDateDebut()
     {
-        return $this->DateDebut;
+        return $this->DateDebut->format('Y-m-d');
     }
 
     /**
@@ -99,8 +99,7 @@ class Classe
      */
     public function setDateDebut($DateDebut): self
     {
-        $this->DateDebut = $DateDebut;
-
+        $this->DateDebut = new DateTime($DateDebut);
         return $this;
     }
 }
