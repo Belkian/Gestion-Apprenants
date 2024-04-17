@@ -53,6 +53,8 @@ class ClasseController
             echo json_encode($message);
         }
     }
+
+
     public function deleteThisClasse($data)
     {
         $data = file_get_contents('php://input');

@@ -7,5 +7,4 @@ define('DB_PWD', 'ga');
 define('PREFIXE', 'gestionapp_');
 
 define('HOME_URL', '/');
-
 define('DB_INITIALIZED', TRUE);

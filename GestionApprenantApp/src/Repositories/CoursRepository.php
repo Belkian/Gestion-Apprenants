@@ -31,4 +31,18 @@ class CoursRepository
 
         return $statement;
     }
+
+    public function createCourCode()
+    {
+        $sql = "INSERT INTO " . PREFIXE . "cours (CODE) VALUE (FLOOR(RAND()*100000));";
+        $statement = $this->DB->prepare($sql);
+        $statement->execute();
+    }
+
+    public function verifyCodeCours()
+    {
+        $sql = "SELECT  " . PREFIXE . "cours.CODE FROM " . PREFIXE . "userhascours," . PREFIXE . "cours WHERE " . PREFIXE . "userhascour.ID_USER = :ID_USER";
+        $statement = $this->DB->prepare($sql);
+        return $statement->execute();
+    }
 }

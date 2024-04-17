@@ -214,7 +214,7 @@ function newPromotion() {
         "NomClasse": NomDeLaPromo,
         "DateDebut": DateDebut,
         "DateFin": DateFin,
-        "NombreApprenant": PlacesDispo
+        "NombreApprenant": PlacesDispo,
     }
     const request = new XMLHttpRequest();
 
@@ -231,6 +231,7 @@ function newPromotion() {
     request.onreadystatechange = function () {
         if (request.readyState === 4 && request.status === 200) {
             let reponse = JSON.parse(request.responseText);
+            console.log(JSON.parse(request.responseText));
             resetNotif(reponse.message);
             let datestart = new Date(reponse.classe.DateDebut).ToLocalDateString('FR');
             let dateend = new Date(reponse.classe.DateFin).ToLocalDateString('FR');
@@ -249,6 +250,27 @@ function newPromotion() {
         }
     }
 }
+
+function CreerCode() {
+    const request = new XMLHttpRequest();
+
+    request.open('POST', 'http://gestionapprenant/dashboard/creercode', true);
+
+    request.setRequestHeader('Content-Type', 'application/json');
+
+    data = JSON.stringify(data);
+
+    request.send(data);
+
+
+
+    request.onreadystatechange = function () {
+        if (request.readyState === 4 && request.status === 200) {
+
+        }
+    }
+}
+
 //*  ======================= FIN  CREATE  FIN =============================
 
 

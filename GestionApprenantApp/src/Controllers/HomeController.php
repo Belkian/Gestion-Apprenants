@@ -4,8 +4,6 @@ namespace src\Controllers;
 
 class HomeController
 {
-
-
     public function index(): void
     {
         if (isset($_GET['erreur'])) {

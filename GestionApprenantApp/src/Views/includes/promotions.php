@@ -25,7 +25,7 @@
                     $end = date_create($key->getDateFin());
                     echo  '<div id="classe' . $key->getIdClasse() . '"  class="m-auto w-full m-2  mb-2 border-b-gray-200 border-solid flex items-center justify-start border-b-2 border-b-neutral-100">
                 <input type="checkbox" class="size-4 mr-1">
-                <p class="w-2/12"> ' . $key->getNomClasse() . ' </p>
+                <p class="w-2/12">' . $key->getNomClasse() . '</p>
                 <p class="w-2/12">' . date_format($start, "d/m/Y") . '</p>
                 <p class="w-2/12">' . date_format($end, "d/m/Y") . '</p>
                 <p class="w-2/12">' . $key->getNombreApprenant() . '</p>
@@ -34,8 +34,7 @@
                 <button class="text-blue-500" onclick="EditerClasse(' . $key->getIdClasse() . ')">Editer</button>
                 <button class="text-blue-500" onclick="SupprimerClasse(' . $key->getIdClasse() . ')">Supprimer</button>
                 </div>
-                </div>
-                ';
+                </div>';
                 }
             }
         }

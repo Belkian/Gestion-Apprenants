@@ -37,7 +37,7 @@ class UserRepository
 
         // $to      = $user->getEmail();
         // $subject = 'Inscription au site SimplonSuivis';
-        // $message = 'Bonjour ' . $user->getPrenom() . ' ! Veuillez cliquer sur le lien ci-dessous 
+        // $message = 'Bonjour ' . $user->getPrenom() . ' ! Veuillez cliquer sur le lien ci-dessous pour comfirmer vote inscription.
         // le LIEN !!!';
         // $headers = 'From: email@envoi.fr' . "\r\n" .
         //     'Reply-To: email@envoi.fr' . "\r\n" .
@@ -67,19 +67,6 @@ class UserRepository
             return false;
         }
     }
-
-    // public function getThisUser($email): User|bool
-    // {
-    //     $sql = "SELECT * FROM " . PREFIXE . "user WHERE EMAIL = :EMAIL ";
-
-    //     $statement = $this->DB->prepare($sql);
-    //     $statement->bindParam(':EMAIL', $email);
-    //     $statement->execute();
-    //     $statement->setFetchMode(PDO::FETCH_CLASS, User::class);
-    //     $retour = $statement->fetch();
-
-    //     return $retour;
-    // }
 
     public function getThisUser($email)
     {
