@@ -42,7 +42,7 @@ if (isset($_SESSION['connecté']) == TRUE) {
           break;
         case str_contains($routeComposee[1], "supprimerpromotion"):
           if ($methode == 'POST') {
-            $ClasseController->deleteThisClasse($_POST, $user);
+            $ClasseController->deleteThisClasse($_POST);
           }
           break;
         default:

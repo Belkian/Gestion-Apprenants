@@ -33,12 +33,13 @@ function NavOFF() {
 }
 
 
-
-
-
-
-
-
+function resetNotif(message) {
+    let notifications = document.querySelector('#notifications');
+    notifications.textContent = message;
+    setTimeout(() =>
+        notifications.textContent = ''
+        , 3000);
+}
 
 function AfficheNewPromotion() {
     let Promotion = document.querySelector('#Include_Promotions').classList;
@@ -53,10 +54,6 @@ function AfficheNewApprenant() {
     apprenant.toggle('hidden');
     newApprenant.toggle('hidden');
 }
-
-
-
-
 
 
 function Accueil() {
@@ -114,8 +111,7 @@ function Apprenant() {
 }
 
 
-
-
+//* =======================  CONNEXION/DECONNEXION =============================
 function Register() {
     let EmailConnexion = document.querySelector('#Emailconnexion').value;
     let PasswordConnexion = document.querySelector('#passwordconnexion').value;
@@ -142,10 +138,31 @@ function Register() {
             affiche.innerHTML = '';
             affiche.innerHTML += request.responseText;
             AccueilDashboard();
+        } else if (request.status === 401) {
+            resetNotif('Erreur de connexion');
         }
     }
 
 }
+
+function deconnexion() {
+    const request = new XMLHttpRequest();
+    request.open('GET', 'http://gestionapprenant/dashboard/deconnexion', true);
+    request.setRequestHeader('Content-Type', 'application/json');
+    request.send();
+    request.onreadystatechange = function () {
+        if (request.readyState === 4 && request.status === 200) {
+            window.history.replaceState(null, document.title, "/");
+            document.body.innerHTML = request.responseText;
+        }
+    }
+}
+//* ======================= FIN CONNEXION/DECONNEXION FIN =============================
+
+
+
+//* =======================  CREATE =============================
+
 
 
 function RegisterApprenant() {
@@ -169,45 +186,32 @@ function RegisterApprenant() {
 
     request.onreadystatechange = function () {
         if (request.readyState === 4 && request.status === 200) {
-
-            document.querySelector('#Include_NewApprenant').innerHTML = JSON.parse(request.responseText);
+            let reponse = JSON.parse(request.responseText);
+            document.querySelector('#TableauApprenants').innerHTML = `<div id="apprenant${reponse.apprenant.IdUser}" class="m-auto w-full m-2  mb-2 border-b-gray-200 border-solid flex items-center justify-start border-b-2 border-b-neutral-100">
+                <input type="checkbox" class="size-4 mr-1">
+                    <p class="w-2/12">${reponse.apprenant.Nom}</p>
+                    <p class="w-2/12">${reponse.apprenant.Nom}</p>
+                    <p class="w-2/12">${reponse.apprenant.Nom}</p>
+                    <p class="w-2/12">oui</p>
+                    <p class="w-2/12">${reponse.apprenant.Nom}</p>
+                    <div class="*:m-1 w-2/12">
+                        <button class="text-blue-500" onclick="VoirApprenant(${reponse.apprenant.IdUser})">Voir</button>
+                        <button class="text-blue-500" onclick="EditerApprenant(${reponse.apprenant.IdUser})">Editer</button>
+                        <button class="text-blue-500" onclick="SupprimerApprenant(${reponse.apprenant.IdUser})">Supprimer</button>
+                    </div>
+            </div>`;
         }
     }
 }
 
-function deconnexion() {
-    const request = new XMLHttpRequest();
-    request.open('GET', 'http://gestionapprenant/dashboard/deconnexion', true);
-    request.setRequestHeader('Content-Type', 'application/json');
-    request.send();
-    request.onreadystatechange = function () {
-        if (request.readyState === 4 && request.status === 200) {
-            window.history.replaceState(null, document.title, "/");
-            document.body.innerHTML = request.responseText;
-        }
-    }
-}
-function connexionPanel() {
 
-}
-
-function firstConnexion() {
-
-}
-function resetNotif(message) {
-    let notifications = document.querySelector('#notifications');
-    notifications.textContent = message;
-    setTimeout(() =>
-        notifications.textContent = ''
-        , 3000);
-}
 function newPromotion() {
     let NomDeLaPromo = document.querySelector('#NomDeLaPromo').value;
     let DateDebut = document.querySelector('#DateDebut').value;
     let DateFin = document.querySelector('#DateFin').value;
     let PlacesDispo = document.querySelector('#PlacesDispo').value;
     let data = {
-        "Nom": NomDeLaPromo,
+        "NomClasse": NomDeLaPromo,
         "DateDebut": DateDebut,
         "DateFin": DateFin,
         "NombreApprenant": PlacesDispo
@@ -228,12 +232,13 @@ function newPromotion() {
         if (request.readyState === 4 && request.status === 200) {
             let reponse = JSON.parse(request.responseText);
             resetNotif(reponse.message);
-
+            let datestart = new Date(reponse.classe.DateDebut).ToLocalDateString('FR');
+            let dateend = new Date(reponse.classe.DateFin).ToLocalDateString('FR');
             document.querySelector('#TableauPromos').innerHTML += `<div id="classe${reponse.classe.IdClasse}" class="m-auto w-full m-2 mb-2 border-b-gray-200 border-solid flex items-center justify-start border-b-2 border-b-neutral-100">
                 <input type="checkbox" class="size-4 mr-1">
-            <p class="w-2/12">${reponse.classe.Nom}</p>
-            <p class="w-2/12">${reponse.classe.DateDebut}</p>
-            <p class="w-2/12">${reponse.classe.DateFin}</p>
+            <p class="w-2/12">${reponse.classe.NomClasse}</p>
+            <p class="w-2/12">${datestart}</p>
+            <p class="w-2/12">${dateend}</p>
             <p class="w-2/12">${reponse.classe.NombreApprenant}</p>
             <div class="*:m-1 w-2/12 w-max">
             <button class="text-blue-500" onclick="VoirClasse(${reponse.classe.IdClasse} )">Voir</button>
@@ -244,7 +249,10 @@ function newPromotion() {
         }
     }
 }
+//*  ======================= FIN  CREATE  FIN =============================
 
+
+//*  =======================   DELETE   =============================
 function SupprimerClasse(IdClasse) {
     const request = new XMLHttpRequest();
     request.open('POST', 'http://gestionapprenant/dashboard/supprimerpromotion', true);
@@ -259,4 +267,18 @@ function SupprimerClasse(IdClasse) {
             resetNotif(reponse.message);
         }
     }
+}
+//*  ======================= FIN  DELETE  FIN =============================
+
+
+
+
+
+
+function connexionPanel() {
+
+}
+
+function firstConnexion() {
+
 }

@@ -9,7 +9,7 @@
 
 CREATE TABLE GestionApp_CLASSE(
         ID_CLASSE         Int  Auto_increment  NOT NULL ,
-        NOM              Varchar (255) NOT NULL ,
+        NOM_CLASSE              Varchar (255) NOT NULL ,
         NOMBRE_APPRENANT Int NOT NULL
 	,CONSTRAINT GestionApp_CLASSE_PK PRIMARY KEY (ID_CLASSE)
 )ENGINE=InnoDB;

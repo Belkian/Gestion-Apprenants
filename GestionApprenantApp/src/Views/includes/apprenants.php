@@ -15,13 +15,12 @@
         <p class="w-2/12">Compte activé</p>
         <p class="w-2/12">Rôle</p>
     </div>
+    <div id="TableauApprenants">
+        <?php
 
-    <?php
-
-    if (isset($classe) && !empty($classe)) {
-
-        foreach ($classe as $key) {
-            echo  '<div class="m-auto w-full m-2  mb-2 border-b-gray-200 border-solid flex items-center justify-start border-b-2 border-b-neutral-100">
+        if (isset($apprenant) && !empty($apprenant)) {
+            foreach ($apprenant as $key) {
+                echo  '<div id="apprenant' . $key->getIdUser() . '" class="m-auto w-full m-2  mb-2 border-b-gray-200 border-solid flex items-center justify-start border-b-2 border-b-neutral-100">
                 <input type="checkbox" class="size-4 mr-1">
                 <p class="w-2/12">' . $key->getNom() . '</p>
                 <p class="w-2/12">' . $key->getPrenom() . '</p>
@@ -29,13 +28,14 @@
                 <p class="w-2/12">oui</p>
                 <p class="w-2/12">' . $key->getIdRole() . '</p>
                 <div class="*:m-1 w-2/12">
-                    <button class="text-blue-500">Voir</button>
-                    <button class="text-blue-500">Editer</button>
-                    <button class="text-blue-500">Supprimer</button>
+                    <button class="text-blue-500" onclick="VoirApprenant(' . $key->getIdUser() . ')">Voir</button>
+                    <button class="text-blue-500" onclick="EditerApprenant(' . $key->getIdUser() . ')">Editer</button>
+                    <button class="text-blue-500" onclick="SupprimerApprenant(' . $key->getIdUser() . ')">Supprimer</button>
                 </div>
             </div>';
+            }
         }
-    }
-    ?>
+        ?>
+    </div>
 
 </div>

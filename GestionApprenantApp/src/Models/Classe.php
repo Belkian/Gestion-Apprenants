@@ -3,12 +3,12 @@
 namespace src\Models;
 
 use src\Services\Hydratation;
-use DateTime;
+
 
 class Classe
 {
     private $IdClasse;
-    private $Nom;
+    private $NomClasse;
     private $NombreApprenant;
     private $DateDebut;
     private $DateFin;
@@ -34,19 +34,19 @@ class Classe
     }
 
     /**
-     * Get the value of Nom
+     * Get the value of NomClasse
      */
-    public function getNom()
+    public function getNomClasse()
     {
-        return $this->Nom;
+        return $this->NomClasse;
     }
 
     /**
-     * Set the value of Nom
+     * Set the value of NomClasse
      */
-    public function setNom($Nom): self
+    public function setNomClasse($NomClasse): self
     {
-        $this->Nom = $Nom;
+        $this->NomClasse = $NomClasse;
 
         return $this;
     }
@@ -74,16 +74,15 @@ class Classe
      */
     public function getDateFin()
     {
-        return $this->DateFin->format('Y-m-d');
+        return $this->DateFin;
     }
 
     /**
      * Set the value of DateFin
      */
-    public function setDateFin($DateFin): self
+    public function setDateFin($DateFin)
     {
-        $this->DateFin = new DateTime($DateFin);
-        return $this;
+        $this->DateFin = $DateFin;
     }
 
     /**
@@ -91,15 +90,14 @@ class Classe
      */
     public function getDateDebut()
     {
-        return $this->DateDebut->format('Y-m-d');
+        return $this->DateDebut;
     }
 
     /**
      * Set the value of DateDebut
      */
-    public function setDateDebut($DateDebut): self
+    public function setDateDebut($DateDebut)
     {
-        $this->DateDebut = new DateTime($DateDebut);
-        return $this;
+        $this->DateDebut = $DateDebut;
     }
 }

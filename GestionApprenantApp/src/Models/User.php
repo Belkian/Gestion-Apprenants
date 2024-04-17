@@ -142,7 +142,7 @@ class User
     /**
      * Set the value of IdClasse
      */
-    public function setIdClasse($IdClasse): self
+    public function setIdClasse($IdClasse): self|null
     {
         $this->IdClasse = $IdClasse;
 
@@ -160,7 +160,7 @@ class User
     /**
      * Set the value of NomClasse
      */
-    public function setNomClasse($NomClasse): self
+    public function setNomClasse($NomClasse): self|null
     {
         $this->NomClasse = $NomClasse;
 
@@ -178,10 +178,9 @@ class User
     /**
      * Set the value of DateDebut
      */
-    public function setDateDebut($DateDebut): self
+    public function setDateDebut($DateDebut)
     {
         $this->DateDebut = $DateDebut;
-
         return $this;
     }
 
@@ -196,10 +195,9 @@ class User
     /**
      * Set the value of DateFin
      */
-    public function setDateFin($DateFin): self
+    public function setDateFin($DateFin): self | null
     {
         $this->DateFin = $DateFin;
-
         return $this;
     }
 
@@ -214,7 +212,7 @@ class User
     /**
      * Set the value of RoleName
      */
-    public function setRoleName($RoleName): self
+    public function setRoleName($RoleName): self | null
     {
         $this->RoleName = $RoleName;
 
@@ -232,7 +230,7 @@ class User
     /**
      * Set the value of NombreApprenant
      */
-    public function setNombreApprenant($NombreApprenant): self
+    public function setNombreApprenant($NombreApprenant): self | null
     {
         $this->NombreApprenant = $NombreApprenant;
 

@@ -22,7 +22,8 @@ class UserRepository
 
     public function saveApprenant(User $user)
     {
-        $sql = "INSERT INTO " . PREFIXE . "user (NOM, PRENOM, PASSWORD, ID_ROLE, EMAIL) VALUES (:NOM, :PRENOM, :PASSWORD, :ID_ROLE, :EMAIL)";
+        $sql = "INSERT INTO " . PREFIXE . "user (NOM, PRENOM, PASSWORD, ID_ROLE, EMAIL) VALUES (:NOM, :PRENOM, :PASSWORD, :ID_ROLE, :EMAIL);
+        SELECT LAST_INSERT_ID();";
 
         $statement = $this->DB->prepare($sql);
         $statement->execute([
@@ -32,6 +33,7 @@ class UserRepository
             ':ID_ROLE' => $user->getIdRole(),
             ':EMAIL' => $user->getEmail()
         ]);
+        $statement->setFetchMode(PDO::FETCH_CLASS, User::class);
 
         // $to      = $user->getEmail();
         // $subject = 'Inscription au site SimplonSuivis';
@@ -49,7 +51,7 @@ class UserRepository
         //     var_dump($test); // reverra la valeur de la fonction mail, probablement false. Aller voir dans ce cas le fichier error.log dans C://wamp/sendmail/
         // }
 
-        return $statement;
+        return $statement->fetch();
     }
 
     public function userExist(User $user)
@@ -81,28 +83,20 @@ class UserRepository
 
     public function getThisUser($email)
     {
-        $sql = "SELECT " . PREFIXE . "user.ID_USER, 
-		" . PREFIXE . "user.ID_ROLE,
-        " . PREFIXE . "user.NOM,
-        " . PREFIXE . "user.PRENOM,
-        " . PREFIXE . "user.PASSWORD,
-        " . PREFIXE . "user.EMAIL,
-        " . PREFIXE . "role.NAME as ROLE_NAME,
-        " . PREFIXE . "classe.ID_CLASSE, 
-        " . PREFIXE . "classe.NOM as NOM_CLASSE,
-        " . PREFIXE . "classe.NOMBRE_APPRENANT,
-        " . PREFIXE . "classe.DATE_DEBUT,
-        " . PREFIXE . "classe.DATE_FIN
-       FROM " . PREFIXE . "user,
-       " . PREFIXE . "role ,
-       " . PREFIXE . "classe 
-       WHERE " . PREFIXE . "user.EMAIL = :EMAIL 
-        AND " . PREFIXE . "user.ID_USER = " . PREFIXE . "role.ID_ROLE;";
+        $sql = "SELECT " . PREFIXE . "user.*,
+        " . PREFIXE . "classe.*,
+        " . PREFIXE . "classe.NOM_CLASSE,
+        " . PREFIXE . "role.NAME as ROLE_NAME
+        FROM " . PREFIXE . "user
+        LEFT JOIN " . PREFIXE . "userhasclasse ON " . PREFIXE . "user.ID_USER = " . PREFIXE . "userhasclasse.ID_USER
+        LEFT JOIN " . PREFIXE . "classe ON " . PREFIXE . "userhasclasse.ID_CLASSE = " . PREFIXE . "classe.ID_CLASSE
+        INNER JOIN " . PREFIXE . "role ON " . PREFIXE . "user.ID_ROLE = " . PREFIXE . "role.ID_ROLE
+        WHERE gestionapp_user.EMAIL = :EMAIL;";
 
         $statement = $this->DB->prepare($sql);
         $statement->execute([':EMAIL' => $email]);
-
-        return $statement->fetchAll(PDO::FETCH_CLASS, User::class);
+        $retour = $statement->fetchAll(PDO::FETCH_CLASS, User::class);
+        return $retour;
     }
 
     public function getAllApprenant($role)
@@ -113,8 +107,7 @@ class UserRepository
         " . PREFIXE . "user.NOM,
         " . PREFIXE . "user.PRENOM,
         " . PREFIXE . "user.EMAIL
-       FROM " . PREFIXE . "user,
-       " . PREFIXE . "role
+       FROM " . PREFIXE . "user
        WHERE " . PREFIXE . "user.ID_ROLE = '3';";
 
             $statement = $this->DB->prepare($sql);

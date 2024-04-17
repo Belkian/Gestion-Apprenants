@@ -41,8 +41,8 @@ class UserController
             ];
             $user = new User($newApprenant);
             if (isset($user) && !empty($user)) {
-                $this->UserRepo->saveApprenant($user);
-                $message = ['message' => "L'utilisateur a bien été enregistré"];
+                $apprenant = $this->UserRepo->saveApprenant($user);
+                $message = ['message' => "L'utilisateur a bien été enregistré", 'apprenant' => $apprenant];
                 return json_encode($message);
             } else {
                 $message = ['message' => "Problème lors de l'enregistrement"];
@@ -65,7 +65,7 @@ class UserController
                     $_SESSION['connecté'] = TRUE;
                     if ($User[0]->getRoleName() == 'Admin') {
                         $_SESSION['user'] = serialize($User[0]->getIdUser());
-                        $_SESSION['apprenant'] = serialize($this->UserRepo->getAllApprenant($User[0]->getIdRole()));
+                        $_SESSION['apprenant'] = serialize($this->UserRepo->getAllApprenant($User[0]->getRoleName()));
                         $_SESSION['classe'] = serialize($User);
                         $this->render('dashboard', ['user' => $_SESSION['user'], 'classe' => $_SESSION['classe'], 'apprenant' => $_SESSION['apprenant']]);
                     }
@@ -74,10 +74,10 @@ class UserController
                         $this->render('dashboard', ['user' => $_SESSION['user']]);
                     }
                 } else {
-                    var_dump('error3');
+                    echo http_response_code(401);
                 }
             } else {
-                var_dump('error2');
+                echo http_response_code(401);
             }
         }
     }
