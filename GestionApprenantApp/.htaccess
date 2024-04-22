@@ -12,6 +12,6 @@
   # RewriteRule (.*?)src*(.*) / [R=301,NE,L]
 
   # Rediriger toutes les urls qui iraient ailleurs que dans le dossier public vers le dossier public :
-  RewriteCond %{THE_REQUEST} !^GET.*/ [NC]
-  RewriteRule ^(.*)$ / [R=301,NE,L]
+  RewriteCond %{THE_REQUEST} !^GET.*/public/ [NC]
+  RewriteRule ^(.*)$ /public/$1 [R=301,NE,L]
 </IfModule>

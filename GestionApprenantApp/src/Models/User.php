@@ -12,12 +12,12 @@ class User
     private $Password;
     private $Email;
     private $IdRole;
+    private $RoleName;
 
     private $IdClasse;
     private $NomClasse;
     private $DateDebut;
     private $DateFin;
-    private $RoleName;
     private $NombreApprenant;
 
     use Hydratation;

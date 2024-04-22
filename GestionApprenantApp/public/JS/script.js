@@ -1,3 +1,4 @@
+
 function ApprenantON() {
     let Apprenant = document.querySelector('#Apprenant');
     Apprenant.classList.add('border-2', 'rounded-t-md', 'border-x-neutral-200', 'border-t-neutral-200', 'border-b-transparent');
@@ -58,7 +59,7 @@ function AfficheNewApprenant() {
 
 function Accueil() {
     const request = new XMLHttpRequest();
-    request.open('POST', 'http://gestionapprenant/accueil', true);
+    request.open('POST', '/accueil', true);
     request.setRequestHeader('Content-Type', 'application/json');
     request.send();
 
@@ -162,9 +163,6 @@ function deconnexion() {
 
 
 //* =======================  CREATE =============================
-
-
-
 function RegisterApprenant() {
     let NomApprenant = document.querySelector('#NomApprenant').value;
     let PrenomApprenant = document.querySelector('#PrenomApprenant').value;
@@ -225,16 +223,15 @@ function newPromotion() {
     data = JSON.stringify(data);
 
     request.send(data);
-
-
-
     request.onreadystatechange = function () {
         if (request.readyState === 4 && request.status === 200) {
             let reponse = JSON.parse(request.responseText);
-            console.log(JSON.parse(request.responseText));
+            console.log(reponse);
             resetNotif(reponse.message);
-            let datestart = new Date(reponse.classe.DateDebut).ToLocalDateString('FR');
-            let dateend = new Date(reponse.classe.DateFin).ToLocalDateString('FR');
+            let datestart = new Date(reponse.classe.DateDebut);
+            datestart.ToLocalDateString('FR');
+            let dateend = new Date(reponse.classe.DateFin);
+            dateend.ToLocalDateString('FR');
             document.querySelector('#TableauPromos').innerHTML += `<div id="classe${reponse.classe.IdClasse}" class="m-auto w-full m-2 mb-2 border-b-gray-200 border-solid flex items-center justify-start border-b-2 border-b-neutral-100">
                 <input type="checkbox" class="size-4 mr-1">
             <p class="w-2/12">${reponse.classe.NomClasse}</p>
@@ -253,17 +250,10 @@ function newPromotion() {
 
 function CreerCode() {
     const request = new XMLHttpRequest();
-
     request.open('POST', 'http://gestionapprenant/dashboard/creercode', true);
-
     request.setRequestHeader('Content-Type', 'application/json');
-
     data = JSON.stringify(data);
-
     request.send(data);
-
-
-
     request.onreadystatechange = function () {
         if (request.readyState === 4 && request.status === 200) {
 
@@ -291,16 +281,3 @@ function SupprimerClasse(IdClasse) {
     }
 }
 //*  ======================= FIN  DELETE  FIN =============================
-
-
-
-
-
-
-function connexionPanel() {
-
-}
-
-function firstConnexion() {
-
-}

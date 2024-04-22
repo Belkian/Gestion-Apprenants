@@ -3,12 +3,14 @@
 use src\Controllers\HomeController;
 use src\Controllers\UserController;
 use src\Controllers\ClasseController;
+use src\Controllers\CoursController;
 use src\Services\Routing;
 
 $UserController = new UserController;
 $HomeController = new HomeController;
 $routeComposee = new Routing;
 $ClasseController = new ClasseController;
+$CoursController = new CoursController;
 
 $route = $_SERVER['REDIRECT_URL'];
 $methode = $_SERVER['REQUEST_METHOD'];
@@ -17,7 +19,7 @@ $routeComposee = $routeComposee->routeComposee($route);
 
 
 if (isset($_SESSION['connecté']) == TRUE) {
-
+  $user = unserialize($_SESSION['user']);
   switch ($route) {
 
     case str_contains($routeComposee[0], "dashboard"):
